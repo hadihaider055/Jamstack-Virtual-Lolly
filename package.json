@@ -15,8 +15,22 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.16",
+    "apollo-server-lambda": "^3.5.0",
+    "faunadb": "^4.4.1",
     "gatsby": "^4.1.0",
+    "graphql-tag": "^2.12.5",
+    "nanoid": "^3.1.30",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
+    "autoprefixer": "^10.4.0",
+    "gatsby-plugin-postcss": "^5.1.0",
+    "postcss": "^8.3.11",
+    "tailwindcss": "^2.2.19"
   }
 }

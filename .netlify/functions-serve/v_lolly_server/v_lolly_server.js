@@ -1,0 +1,1 @@
+module.exports = require('./src/functions/v_lolly_server/v_lolly_server.js')

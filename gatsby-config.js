@@ -3,5 +3,15 @@ module.exports = {
     siteUrl: "https://www.yourdomain.tld",
     title: "Jamstack-virtual-lolly",
   },
-  plugins: [],
+  plugins: [
+    "gatsby-plugin-postcss",
+    {
+      resolve: `gatsby-plugin-typescript`,
+      options: {
+        isTSX: true,
+        jsxPragma: `jsx`,
+        allExtensions: true,
+      },
+    },
+  ],
 };
