@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 
 const Header = () => {
   return (
-    <div className="text-center mt-14">
+    <div className="text-center mt-14 mx-auto">
       <h1 className="text-white text-7xl font-pacifico main__heading leading-loose">
         <Link to="/">Virtual Lollipop</Link>
       </h1>

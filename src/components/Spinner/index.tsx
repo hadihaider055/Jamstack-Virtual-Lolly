@@ -1,9 +1,26 @@
 import React from "react";
 
-const Spinner = () => {
+interface types {
+  width: string;
+  height: string;
+  display: string;
+  marginTop: string;
+  marginLeft: string;
+}
+
+const Spinner: React.FC<types> = ({
+  width,
+  height,
+  marginLeft,
+  marginTop,
+  display,
+}) => {
   return (
     <>
-      <svg className="spinner" viewBox="0 0 50 50">
+      <svg
+        className={`spinner ${width} ${height} ${marginTop}  ${marginLeft}  ${display}`}
+        viewBox="0 0 50 50"
+      >
         <circle
           className="path"
           cx="25"

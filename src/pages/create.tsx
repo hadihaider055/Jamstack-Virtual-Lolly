@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Header from "../components/Header";
 import Lolly from "../components/Lolly";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import Spinner from "../components/Spinner";
 import { navigate } from "gatsby-link";
@@ -160,7 +160,7 @@ const CreateLolly = () => {
                 disabled={btnDisable}
               >
                 Freeze this lolly and get a link
-                {btnDisable ? <Spinner /> : ""}
+                {btnDisable ? <Spinner width="w-4" height="h-4" marginTop="mt-1" marginLeft="-ml-1" display="inline-block"/> : ""}
               </button>
             </div>
           </div>
@@ -187,4 +187,3 @@ const CREATE_LOLLY = gql`
     }
   }
 `;
-
