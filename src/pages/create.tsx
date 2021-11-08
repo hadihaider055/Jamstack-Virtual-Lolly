@@ -1,17 +1,53 @@
 import React, { useRef, useState } from "react";
 import Header from "../components/Header";
 import Lolly from "../components/Lolly";
+import { useQuery, useMutation } from "@apollo/client";
+import gql from "graphql-tag";
+import Spinner from "../components/Spinner";
+import { navigate } from "gatsby-link";
 
 const CreateLolly = () => {
   const [lolly, setLolly] = useState({
-    fillLollyTop: "#E02254",
-    fillLollyMiddle: "#E96743",
-    fillLollyBottom: "#F5C64D",
+    colorTop: "#E02254",
+    colorMiddle: "#E96743",
+    colorBottom: "#F5C64D",
   });
+  const [btnDisable, setBtnDisable] = useState(false);
+  const recipientName = useRef(null);
+  const messageVal = useRef(null);
+  const senderVal = useRef(null);
 
-  const recipientName = useRef();
-  const message = useRef();
-  const sender = useRef();
+  const { loading, error, data } = useQuery(GET_LOLLIES);
+  const [createLolly] = useMutation(CREATE_LOLLY);
+
+    
+  const handleCreate = async () => {
+    setBtnDisable(true);
+    const recipient = recipientName.current.value;
+    const message = messageVal.current.value;
+    const sender = senderVal.current.value;
+    const { colorTop, colorMiddle, colorBottom } = lolly;
+    const newLolly = await createLolly({
+      variables: {
+        recipientName:recipient,
+        message,
+        sender,
+        colorTop,
+        colorMiddle,
+        colorBottom,
+      },
+    });
+
+    if (newLolly) {
+      setBtnDisable(false);
+      navigate(`/v_lolly/${newLolly.data.createLolly.lollyPath}`);
+    }
+    recipientName.current.value = "";
+    messageVal.current.value = "";
+    senderVal.current.value = "";
+
+    
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLolly({
@@ -20,16 +56,21 @@ const CreateLolly = () => {
     });
   };
 
+  if (error) return <h2 className="text-white">Error</h2>;
+  if (loading) return <h2 className="text-white">Loading</h2>;
+
+  
+
   return (
-    <div className="max-w-4xl w-full mx-auto">
+    <div className="max-w-5xl w-full mx-auto">
       <Header />
       <div className="mt-24">
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row justify-center">
           <div className="mx-auto mb-12">
             <Lolly
-              fillLollyTop={lolly.fillLollyTop}
-              fillLollyMiddle={lolly.fillLollyMiddle}
-              fillLollyBottom={lolly.fillLollyBottom}
+              fillLollyTop={lolly.colorTop}
+              fillLollyMiddle={lolly.colorMiddle}
+              fillLollyBottom={lolly.colorBottom}
               lollyWidth={400}
               lollyHeight={400}
             />
@@ -44,8 +85,8 @@ const CreateLolly = () => {
                 id="fill-1"
                 className="w-20 h-20 -mt-4 -ml-4 cursor-pointer"
                 onChange={handleChange}
-                value={lolly.fillLollyTop}
-                name="fillLollyTop"
+                value={lolly.colorTop}
+                name="colorTop"
               />
             </label>
             <label
@@ -56,8 +97,8 @@ const CreateLolly = () => {
                 type="color"
                 className="w-20 h-20 -mt-4 -ml-4 cursor-pointer"
                 onChange={handleChange}
-                value={lolly.fillLollyMiddle}
-                name="fillLollyMiddle"
+                value={lolly.colorMiddle}
+                name="colorMiddle"
               />
             </label>
             <label
@@ -68,8 +109,8 @@ const CreateLolly = () => {
                 type="color"
                 className="w-20 h-20 -mt-4 -ml-4 cursor-pointer"
                 onChange={handleChange}
-                value={lolly.fillLollyBottom}
-                name="fillLollyBottom"
+                value={lolly.colorBottom}
+                name="colorBottom"
               />
             </label>
           </div>
@@ -96,7 +137,7 @@ const CreateLolly = () => {
                 <textarea
                   className="bg-gray-800 w-full block px-2 py-1 border border-pink-500 box-shadow-pink mb-5 mt-1 resize-none h-48 text-md font-lato"
                   id="message"
-                  ref={message}
+                  ref={messageVal}
                 />
                 <label
                   htmlFor="senderName"
@@ -106,19 +147,22 @@ const CreateLolly = () => {
                   <input
                     type="text"
                     id="senderName"
-                    placeholder="from your friend..."
+                    placeholder="From your friend..."
                     className="bg-gray-800 h-10 w-full block px-2 py-1 border border-pink-500 box-shadow-pink mb-5 mt-1 text-md font-lato"
-                    ref={sender}
+                    ref={senderVal}
                   />
                 </label>
               </label>
             </div>
             <div className="mx-auto text-center mt-20 mb-10">
               <button
-                className="mx-auto text-center border-2 border-pink-400 py-4 px-5 font-lato font-semibold rounded-full button text-pink-400 hover:text-gray-800 hover:bg-pink-400 transition-all duration-500 ease-in-out"
+                className="mx-auto text-center border-2 border-pink-400 py-4 px-5 font-lato font-semibold rounded-full button text-pink-400 hover:text-gray-800 active:text-gray-800 hover:bg-pink-400 active:bg-pink-400 transition-all duration-500 ease-in-out"
                 type="button"
+                onClick={handleCreate}
+                disabled={btnDisable}
               >
                 Freeze this lolly and get a link
+                {btnDisable ? <Spinner /> : ""}
               </button>
             </div>
           </div>
@@ -129,3 +173,33 @@ const CreateLolly = () => {
 };
 
 export default CreateLolly;
+
+const GET_LOLLIES = gql`
+  {
+    lollies {
+      recipientName
+      message
+      sender
+      lollyPath
+      colorTop
+      colorMiddle
+      colorBottom
+    }
+  }
+`;
+
+const CREATE_LOLLY = gql`
+  mutation createLolly(
+    $recipientName: String!
+    $message: String!
+    $sender: String!
+    $colorTop: String!
+    $colorMiddle: String!
+    $colorBottom: String!
+  ) {
+    createLolly(recipientName: $recipientName,message: $message,sender: $sender,colorTop: $colorTop,colorMiddle: $colorMiddle,colorBottom: $colorBottom) {
+      lollyPath
+    }
+  }
+`;
+
