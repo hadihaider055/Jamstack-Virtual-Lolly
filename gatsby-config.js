@@ -19,11 +19,11 @@ module.exports = {
     //   resolve: "gatsby-source-graphql",
     //   options: {
     //     // This type will contain remote schema Query type
-    //     typeName: `Lolly`,
+    //     typeName: `LOLLY`,
     //     // This is the field under which it's accessible
     //     fieldName: `lollies`,
     //     // URL to query from
-    //     url: `https://jamstack-virtual-lolly.netlify.app/.netlify/functions/v_lolly_server`,
+    //     url: `http://localhost:8888/.netlify/functions/v_lolly_server`,
     //   },
     // },
   ],
