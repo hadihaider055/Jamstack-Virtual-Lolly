@@ -19,6 +19,7 @@ const CreateLolly = () => {
 
   const [createLolly] = useMutation(CREATE_LOLLY);
 
+    
   const handleCreate = async () => {
     setBtnDisable(true);
     const recipient = recipientName.current.value;
@@ -27,7 +28,7 @@ const CreateLolly = () => {
     const { colorTop, colorMiddle, colorBottom } = lolly;
     const newLolly = await createLolly({
       variables: {
-        recipientName: recipient,
+        recipientName:recipient,
         message,
         sender,
         colorTop,
@@ -43,6 +44,8 @@ const CreateLolly = () => {
     recipientName.current.value = "";
     messageVal.current.value = "";
     senderVal.current.value = "";
+
+    
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,6 +54,10 @@ const CreateLolly = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+
+
+  
 
   return (
     <div className="max-w-5xl w-full mx-auto">
@@ -165,6 +172,7 @@ const CreateLolly = () => {
 
 export default CreateLolly;
 
+
 const CREATE_LOLLY = gql`
   mutation createLolly(
     $recipientName: String!
@@ -174,15 +182,9 @@ const CREATE_LOLLY = gql`
     $colorMiddle: String!
     $colorBottom: String!
   ) {
-    createLolly(
-      recipientName: $recipientName
-      message: $message
-      sender: $sender
-      colorTop: $colorTop
-      colorMiddle: $colorMiddle
-      colorBottom: $colorBottom
-    ) {
+    createLolly(recipientName: $recipientName,message: $message,sender: $sender,colorTop: $colorTop,colorMiddle: $colorMiddle,colorBottom: $colorBottom) {
       lollyPath
     }
   }
 `;
+

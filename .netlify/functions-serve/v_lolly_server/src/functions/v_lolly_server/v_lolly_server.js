@@ -80276,7 +80276,6 @@ var resolvers = {
           secret: process.env.FAUNADB_SERVER_SECRET
         });
         const result = await client.query(q.Get(q.Match(q.Index("lolly_by_link"), lollyPath)));
-        console.log(result);
         return result.data;
       } catch (error) {
         console.log(error);

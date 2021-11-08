@@ -3,7 +3,8 @@ import React from "react";
 import Header from "../components/Header";
 import Lolly from "../components/Lolly";
 
-const LollyTemplate = ({ pageContext }) => {
+const LollyTemplate = (lolly) => {
+  const { location, pageContext } = lolly;
   return (
     <div className="max-w-4xl w-full mx-auto">
       <Header />
@@ -24,8 +25,7 @@ const LollyTemplate = ({ pageContext }) => {
             </h1>
             <div className="bg-black max-w-md md:max-w-xl w-full text-pink-400 py-4 px-2 text-center text-md font-roboto tracking-wider mt-6 shadow-lg rounded-md box-shadow">
               <Link to={`/v_lolly/${pageContext.lollyPath}`}>
-                https://jamstack-virtual-lolly.netlify.app/v_lolly/
-                {pageContext.lollyPath}
+                https://jamstack-virtual-lolly.netlify.app{location.pathname}/
               </Link>
             </div>
             <div className="mt-6 bg-gray-800 p-7 rounded-md box-shadow shadow-lg max-w-md md:max-w-xl w-full max-h-72 h-full text-gray-300 mb-3">
