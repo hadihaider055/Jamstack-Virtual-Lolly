@@ -1,1 +1,1 @@
-module.exports = require('./src/v_lolly_server.js')
+module.exports = require('./src/functions/v_lolly_server/v_lolly_server.js')

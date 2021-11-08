@@ -6,11 +6,11 @@ import Lolly from "../components/Lolly";
 const LollyTemplate = ({ pageContext }) => {
   const { lollyByPath } = pageContext;
   return (
-    <div className="max-w-4xl w-full mx-auto">
+    <div className="max-w-4xl w-full mx-auto overflow-x-hidden">
       <Header />
       <div className="mt-20 md:-ml-40">
-        <div className="flex flex-col md:flex-row justify-center mx-auto">
-          <div className="mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-center -ml-10 md:ml-2">
+          <div className="mx-auto text-center w-full">
             <Lolly
               fillLollyTop={lollyByPath.colorTop}
               fillLollyBottom={lollyByPath.colorBottom}

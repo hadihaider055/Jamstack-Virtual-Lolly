@@ -23,16 +23,16 @@ const Home = () => {
           lollyHeight={300}
         />
         <Lolly
-          fillLollyTop="#E02254"
-          fillLollyMiddle="#E96743"
+          fillLollyTop="#A80000"
+          fillLollyMiddle="#793ED0"
           fillLollyBottom="#F5C64D"
           lollyWidth={300}
           lollyHeight={300}
         />
         <Lolly
-          fillLollyTop="#E02254"
-          fillLollyMiddle="#E96743"
-          fillLollyBottom="#F5C64D"
+          fillLollyTop="#00A832"
+          fillLollyMiddle="#D38580"
+          fillLollyBottom="#A000EB"
           lollyWidth={300}
           lollyHeight={300}
         />
